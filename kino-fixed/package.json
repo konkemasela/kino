@@ -26,5 +26,12 @@
     "postcss": "8.5.8",
     "tailwindcss": "4.1.17",
     "typescript": "5.9.3"
+  },
+  "overrides": {
+    "@typescript-eslint/eslint-plugin": "8.39.0",
+    "@typescript-eslint/parser": "8.39.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
   }
 }
