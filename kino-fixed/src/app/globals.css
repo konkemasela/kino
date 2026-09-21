@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 @theme {
-  --color-void: #050805;
-  --color-panel: #0b120d;
-  --color-panel2: #101b13;
-  --color-line: #1d2d22;
-  --color-bone: #edf7ee;
-  --color-fog: #a8c1ab;
-  --color-acid: #d8f9b3;
+  --color-void: #020302;
+  --color-panel: #0d0d0d;
+  --color-panel2: #151515;
+  --color-line: #232323;
+  --color-bone: #f5f6f3;
+  --color-fog: #b7b9b3;
+  --color-acid: #b8ff66;
   --color-ember: #ff8e5e;
 
   --font-display: var(--font-bebas), "Arial Narrow", sans-serif;
@@ -81,8 +81,8 @@ html {
 
 body {
   background:
-    radial-gradient(circle at top, rgba(146, 255, 164, 0.14), transparent 28%),
-    linear-gradient(180deg, #050805 0%, #070d08 100%);
+    radial-gradient(circle at top, rgba(184, 255, 102, 0.08), transparent 28%),
+    linear-gradient(180deg, #020302 0%, #070707 100%);
   color: var(--color-bone);
   overflow-x: clip;
 }
