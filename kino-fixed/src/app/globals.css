@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+@theme {
+  --color-void: #050805;
+  --color-panel: #0b120d;
+  --color-panel2: #101b13;
+  --color-line: #1d2d22;
+  --color-bone: #edf7ee;
+  --color-fog: #a8c1ab;
+  --color-acid: #d8f9b3;
+  --color-ember: #ff8e5e;
+
+  --font-display: var(--font-bebas), "Arial Narrow", sans-serif;
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-editorial: var(--font-instrument), Georgia, serif;
+
+  --animate-marquee: marquee 36s linear infinite;
+  --animate-spin-slow: spin 14s linear infinite;
+  --animate-pulse-soft: pulse-soft 2.4s ease-in-out infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes pulse-soft {
+    0%,
+    100% {
+      opacity: 0.35;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px color-mix(in srgb, var(--color-bone) 42%, transparent);
+}
+
+@utility text-outline-acid {
+  color: transparent;
+  -webkit-text-stroke: 1.5px color-mix(in srgb, var(--color-acid) 72%, transparent);
+}
+
+@utility mask-fade-x {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 4%,
+    black 96%,
+    transparent
+  );
+}
+
+@keyframes barslide {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(400%);
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(circle at top, rgba(146, 255, 164, 0.14), transparent 28%),
+    linear-gradient(180deg, #050805 0%, #070d08 100%);
+  color: var(--color-bone);
+  overflow-x: clip;
+}
+
+::selection {
+  background: rgba(216, 249, 179, 0.9);
+  color: #050805;
+}
+
+body::-webkit-scrollbar {
+  width: 10px;
+}
+body::-webkit-scrollbar-track {
+  background: #050805;
+}
+body::-webkit-scrollbar-thumb {
+  background: #1c3024;
+  border-radius: 8px;
+  border: 2px solid #050805;
+}
+body::-webkit-scrollbar-thumb:hover {
+  background: #295037;
+}
