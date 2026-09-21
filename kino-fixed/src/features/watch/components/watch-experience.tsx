@@ -270,6 +270,13 @@ export default function WatchExperience({
     window.localStorage.setItem(sessionChatKey, JSON.stringify(chatMessages.slice(-40)));
   }, [chatMessages, sessionChatKey]);
 
+  const watchPath = (s: number, e: number) =>
+    kind === "anime"
+      ? `/watch/anime/${id}?s=${s}&e=${e}`
+      : kind === "tv"
+        ? `/watch/tv/${id}?s=${s}&e=${e}`
+        : `/watch/movie/${id}`;
+
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -307,13 +314,6 @@ export default function WatchExperience({
     window.localStorage.setItem("kino:party:last", roomKey);
     window.history.replaceState(null, "", watchPath(targetSeason, targetEpisode));
   }, [id, kind, watchPath]);
-
-  const watchPath = (s: number, e: number) =>
-    kind === "anime"
-      ? `/watch/anime/${id}?s=${s}&e=${e}`
-      : kind === "tv"
-        ? `/watch/tv/${id}?s=${s}&e=${e}`
-        : `/watch/movie/${id}`;
 
   const sendChatMessage = () => {
     const value = chatInput.trim();
