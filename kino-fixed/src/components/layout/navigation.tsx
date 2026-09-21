@@ -75,14 +75,14 @@ export default function Navigation() {
           aria-label="KINO home"
           className="flex h-20 shrink-0 items-center border-b border-line px-[18px]"
         >
-          <div className="group relative flex h-12 w-28 items-center justify-center overflow-hidden rounded-2xl border border-line/80 bg-panel/90 px-2 shadow-[0_0_0_1px_rgba(215,246,55,0.08)] ring-1 ring-inset ring-white/5 transition-all duration-300 hover:border-acid/40 hover:shadow-[0_0_26px_rgba(215,246,55,0.12)]">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(215,246,55,0.18),transparent_55%)]" />
+          <div className="group relative flex h-12 w-28 items-center justify-center overflow-hidden rounded-2xl border border-line/80 bg-panel/80 px-2 shadow-[0_0_0_1px_rgba(255,255,255,0.03)] ring-1 ring-inset ring-white/5 transition-all duration-300 hover:border-white/25">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.04),transparent_55%)]" />
             <Image
               src="/kino-logo.png"
               alt="KINO logo"
               width={112}
               height={32}
-              className="relative h-auto w-full max-w-[94px] object-contain drop-shadow-[0_0_18px_rgba(215,246,55,0.18)] transition-transform duration-300 group-hover:scale-[1.04]"
+              className="relative h-auto w-full max-w-[94px] object-contain transition-transform duration-300 group-hover:scale-[1.04]"
               priority
             />
           </div>
@@ -162,13 +162,13 @@ export default function Navigation() {
         )}
       >
         <Link href="/" className="flex items-center" aria-label="KINO home">
-          <div className="flex items-center justify-center rounded-full border border-line/80 bg-panel/90 px-3 py-1.5 shadow-[0_0_18px_rgba(215,246,55,0.06)] backdrop-blur-sm">
+          <div className="flex items-center justify-center rounded-full border border-line/80 bg-panel/85 px-3 py-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.03)] backdrop-blur-sm">
             <Image
               src="/kino-logo.png"
               alt="KINO logo"
               width={108}
               height={28}
-              className="h-auto w-auto max-w-[92px] object-contain drop-shadow-[0_0_12px_rgba(215,246,55,0.12)]"
+              className="h-auto w-auto max-w-[92px] object-contain"
               priority
             />
           </div>
