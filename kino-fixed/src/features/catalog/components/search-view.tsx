@@ -102,7 +102,7 @@ export default function SearchView() {
           ref={inputRef}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Dune, Severance, Nolan..."
+          placeholder="Dune, Cars, Nolan..."
           className="w-full bg-transparent font-display text-3xl tracking-[0.04em] text-bone uppercase outline-none placeholder:text-fog/40 md:text-5xl"
         />
       </div>
