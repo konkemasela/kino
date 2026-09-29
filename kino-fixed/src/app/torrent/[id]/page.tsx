@@ -70,7 +70,7 @@ export default async function TorrentPage({
           {mediaType === "tv" && (
             <p className="mt-2 flex items-center gap-2 font-editorial text-lg italic text-acid/90 md:text-xl">
               <DownloadCloud size={18} />
-              Every episode, seeded by EZTV
+              Every episode Torrents
             </p>
           )}
         </div>
@@ -79,7 +79,7 @@ export default async function TorrentPage({
           className="flex items-center gap-2.5 rounded-full bg-acid px-6 py-3 text-[11px] font-bold tracking-[0.18em] text-void uppercase shadow-[0_0_32px_rgba(215,246,55,0.25)] transition-transform hover:scale-105 active:scale-95"
         >
           <Play size={14} className="fill-void" />
-          Stream instead
+          Watch instead
         </Link>
       </div>
 
