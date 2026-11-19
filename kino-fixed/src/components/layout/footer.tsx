@@ -2,114 +2,37 @@ import Link from "next/link";
 import { GraduationCap, ShieldAlert } from "lucide-react";
 import { STREAM_SERVERS } from "@/features/watch/servers";
 
+const LINKS = [
+  { href: "/movies", label: "Movies" },
+  { href: "/series", label: "Series" },
+  { href: "/anime", label: "Anime" },
+  { href: "/cartoons", label: "Animation" },
+  { href: "/library", label: "Saved" },
+  { href: "/settings", label: "Settings" },
+  { href: "/search", label: "Search" },
+  { href: "/legal", label: "Legal" },
+];
+
 export default function Footer() {
   return (
-    <footer className="relative mt-24 border-t border-line bg-panel/40 pb-24 md:pb-0">
-      <div className="mx-auto max-w-[1600px] px-5 pt-16 md:px-10">
-        <div className="grid gap-12 pb-16 md:grid-cols-[1.4fr_1fr_1fr]">
-          <div>
-            <p className="max-w-md font-editorial text-2xl italic leading-snug text-fog">
-              Every film you love,{" "}
-              <span className="text-bone">one screen</span>, zero friction.
-            </p>
-            <p className="mt-6 max-w-md text-sm leading-relaxed text-fog/80">
-              KINO is a discovery interface. It does not host, upload or store
-              any media files — playback is provided entirely by non-affiliated
-              third-party embed servers.
+    <footer className="mt-16 border-t border-line pb-24 md:pb-0">
+      <div className="mx-auto max-w-[1600px] px-5 py-8 md:px-10">
+        <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+          <div className="max-w-lg">
+            <Link href="/" className="text-sm font-semibold tracking-wide text-bone">KINO</Link>
+            <p className="mt-2 text-xs leading-5 text-fog">
+              KINO is a discovery interface. It does not host or store media files. Playback is provided by third-party embed servers.
             </p>
           </div>
-
-          <div>
-            <h4 className="text-[11px] font-bold tracking-[0.28em] text-fog uppercase">
-              Explore
-            </h4>
-            <ul className="mt-5 space-y-3 text-sm">
-              {[
-                { href: "/", label: "Home" },
-                { href: "/movies", label: "Movies" },
-                { href: "/series", label: "TV Series" },
-                { href: "/anime", label: "Anime" },
-                { href: "/cartoons", label: "Cartoons" },
-                { href: "/library", label: "My Space" },
-                { href: "/settings", label: "Settings" },
-                { href: "/search", label: "Search" },
-                { href: "/donate", label: "Donate" },
-                { href: "/guides/adblock", label: "Ad blocker guide" },
-                { href: "/guides/vpn", label: "VPN for torrenting" },
-                { href: "/legal", label: "Legal & Terms" },
-              ].map((l) => (
-                <li key={l.href}>
-                  <Link
-                    href={l.href}
-                    className="text-bone/80 transition-colors hover:text-acid"
-                  >
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-[11px] font-bold tracking-[0.28em] text-fog uppercase">
-              Gated Mirrors
-            </h4>
-            <ul className="mt-5 space-y-3 text-sm">
-              {STREAM_SERVERS.slice(0, 5).map((s) => (
-                <li key={s.id} className="flex items-center gap-2">
-                  <span className="size-1.5 rounded-full bg-acid/70" />
-                  <span className="text-bone/80">Mirror {s.name}</span>
-                  <span className="text-xs text-fog/70">{s.tagline}</span>
-                </li>
-              ))}
-              <li className="text-xs text-fog/70">
-                Upstream identities are intentionally hidden. Switch mirrors
-                anytime inside the player.
-              </li>
-            </ul>
-          </div>
+          <nav aria-label="Footer navigation" className="flex max-w-md flex-wrap gap-x-5 gap-y-2 text-xs text-fog">
+            {LINKS.map((link) => <Link key={link.href} href={link.href} className="transition-colors hover:text-bone">{link.label}</Link>)}
+          </nav>
         </div>
-
-        <nav
-          aria-label="Legal"
-          className="flex flex-wrap gap-x-6 gap-y-2 border-t border-line pt-6 text-xs text-fog"
-        >
-          {[
-            { href: "/legal/terms", label: "Terms of Use" },
-            { href: "/legal/privacy", label: "Privacy" },
-            { href: "/legal/cookies", label: "Cookies" },
-            { href: "/legal/dmca", label: "Copyright / DMCA" },
-            { href: "/legal/acceptable-use", label: "Acceptable Use" },
-            { href: "/legal/disclaimer", label: "Disclaimer" },
-            { href: "/legal/contact", label: "Contact" },
-          ].map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className="transition-colors hover:text-acid"
-            >
-              {l.label}
-            </Link>
-          ))}
-        </nav>
-
-        <div className="flex flex-col gap-3 py-6 text-xs text-fog/70 md:flex-row md:items-center md:justify-between">
-          <p className="flex items-center gap-2">
-            <ShieldAlert size={14} className="text-acid/80" />
-            Metadata by the open Cinemeta community catalogs. No TMDB APIs, no
-            keys — streams via third-party embed servers.
-          </p>
-          <p className="flex items-center gap-2">
-            <GraduationCap size={14} />
-            KINO © {new Date().getFullYear()} — built for educational purposes.
-          </p>
+        <div className="mt-6 flex flex-col gap-2 border-t border-line pt-4 text-xs text-fog sm:flex-row sm:items-center sm:justify-between">
+          <p className="flex items-start gap-2"><ShieldAlert size={14} className="mt-0.5 shrink-0" /> Metadata from community catalogs; streams are supplied by third-party servers.</p>
+          <p className="flex items-center gap-2"><GraduationCap size={14} /> KINO © {new Date().getFullYear()} — educational purposes.</p>
         </div>
-      </div>
-
-      <div className="overflow-hidden pb-2" aria-hidden>
-        <p className="select-none text-center font-display text-[26vw] leading-[0.8] tracking-[0.06em] text-bone/[0.045]">
-          KINO
-        </p>
+        <ul className="sr-only" aria-label="Available stream mirrors">{STREAM_SERVERS.map((server) => <li key={server.id}>{server.name}: {server.tagline}</li>)}</ul>
       </div>
     </footer>
   );

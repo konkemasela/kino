@@ -7,7 +7,7 @@
   --color-line: #2a2a2a;
   --color-bone: #f5f5f2;
   --color-fog: #a5a5a0;
-  --color-acid: #b8ff66;
+  --color-acid: #ffffff;
   --color-ember: #ff8e5e;
 
   --font-display: var(--font-bebas), "Arial Narrow", sans-serif;
@@ -61,7 +61,7 @@ html.light {
   --color-line: #d9d6cd;
   --color-bone: #181914;
   --color-fog: #66675f;
-  --color-acid: #3f6a0a;
+  --color-acid: #181914;
   --color-ember: #b8460f;
 }
 
@@ -73,14 +73,11 @@ html.light {
   --color-line: #2a2a2a;
   --color-bone: #f5f5f2;
   --color-fog: #a5a5a0;
-  --color-acid: #b8ff66;
+  --color-acid: #ffffff;
   --color-ember: #ff8e5e;
 }
 
-html.reduce-motion {
-  scroll-behavior: auto;
-}
-
+html.reduce-motion { scroll-behavior: auto; }
 html.reduce-motion *,
 html.reduce-motion *::before,
 html.reduce-motion *::after {
@@ -90,18 +87,11 @@ html.reduce-motion *::after {
   scroll-behavior: auto !important;
 }
 
-html.compact .compact-grid {
-  gap: 0.75rem 0.75rem;
-}
-
-html.compact .compact-rail {
-  width: 118px;
-}
-
+html.compact .compact-grid { gap: 0.75rem 0.75rem; }
+html.compact .compact-rail { width: 118px; }
 @media (min-width: 640px) {
   html.compact .compact-rail { width: 136px; }
 }
-
 @media (min-width: 768px) {
   html.compact .compact-rail { width: 154px; }
 }
