@@ -12,8 +12,8 @@ import {
 } from "@/features/catalog/api";
 import AnimeRail from "@/features/anime/components/anime-rail";
 
-const value = (r: PromiseSettledResult<CatalogItem[]>): CatalogItem[] =>
-  r.status === "fulfilled" ? r.value : [];
+const value = (result: PromiseSettledResult<CatalogItem[]>): CatalogItem[] =>
+  result.status === "fulfilled" ? result.value : [];
 
 export default async function HomePage() {
   const results = await Promise.allSettled([
@@ -44,97 +44,71 @@ export default async function HomePage() {
 
   if (topMovies.length === 0 && topSeries.length === 0) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center gap-6 px-6 text-center">
-        <WifiOff size={40} className="text-acid" />
-        <h1 className="font-display text-5xl tracking-[0.08em] uppercase">
-          Signal lost
-        </h1>
-        <p className="max-w-md text-sm text-fog">
-          The community metadata catalogs could not be reached. Check your
-          connection and reload.
+      <div className="flex min-h-screen flex-col items-center justify-center gap-4 px-6 text-center">
+        <WifiOff size={28} className="text-fog" aria-hidden="true" />
+        <h1 className="text-2xl font-semibold">Catalog unavailable</h1>
+        <p className="max-w-md text-sm leading-6 text-fog">
+          We couldn’t load the movie and series catalogs. Check your connection
+          and try again.
         </p>
       </div>
     );
   }
 
-  const heroSeeds = [
-    topMovies[0],
-    topSeries[0],
-    topMovies[1],
-    topSeries[1],
-    topMovies[2],
-    topSeries[2],
-  ].filter(Boolean);
-
+  const heroSeeds = [topMovies[0], topSeries[0], topMovies[1], topSeries[1]].filter(Boolean);
   const heroMetas = await Promise.all(
-    heroSeeds.map((s) => getMeta(s.type, s.id).catch(() => null)),
+    heroSeeds.map((item) => getMeta(item.type, item.id).catch(() => null)),
   );
 
   const heroItems: HeroItem[] = heroMetas
-    .filter((m): m is FullMeta => Boolean(m && (m.backdrop || m.poster)))
-    .map((m) => ({
-      id: m.id,
-      mediaType: m.type,
-      title: m.name,
-      overview: m.description,
-      backdrop: (m.backdrop ?? m.poster)!,
-      year: yearOfItem(m.releaseInfo || m.year),
-      rating: m.imdbRating,
+    .filter((meta): meta is FullMeta => Boolean(meta && (meta.backdrop || meta.poster)))
+    .map((meta) => ({
+      id: meta.id,
+      mediaType: meta.type,
+      title: meta.name,
+      overview: meta.description,
+      backdrop: (meta.backdrop ?? meta.poster)!,
+      year: yearOfItem(meta.releaseInfo || meta.year),
+      rating: meta.imdbRating,
     }));
 
   const topTen: CatalogItem[] = [];
-  for (let i = 0; i < Math.max(topMovies.length, topSeries.length); i++) {
-    if (topMovies[i]) topTen.push(topMovies[i]);
-    if (topSeries[i]) topTen.push(topSeries[i]);
+  for (let index = 0; index < Math.max(topMovies.length, topSeries.length); index++) {
+    if (topMovies[index]) topTen.push(topMovies[index]);
+    if (topSeries[index]) topTen.push(topSeries[index]);
     if (topTen.length >= 10) break;
   }
 
   const genreRails = [
-    { title: "Action", accent: "adrenaline", items: actionMovies, href: "/movies?genre=Action" },
-    { title: "Comedy", accent: "laugh track", items: comedySeries, href: "/series?genre=Comedy" },
-    { title: "Drama", accent: "slow burn", items: dramaMovies, href: "/movies?genre=Drama" },
-    { title: "Horror", accent: "after dark", items: horrorMovies, href: "/movies?genre=Horror" },
-    { title: "Thriller", accent: "edge of your seat", items: thrillerSeries, href: "/series?genre=Thriller" },
-    { title: "Romance", accent: "heart first", items: romanceMovies, href: "/movies?genre=Romance" },
-    { title: "Sci-Fi", accent: "future shock", items: sciFiSeries, href: "/series?genre=Sci-Fi" },
+    { title: "Action", items: actionMovies, href: "/movies?genre=Action" },
+    { title: "Comedy", items: comedySeries, href: "/series?genre=Comedy" },
+    { title: "Drama", items: dramaMovies, href: "/movies?genre=Drama" },
+    { title: "Horror", items: horrorMovies, href: "/movies?genre=Horror" },
+    { title: "Thriller", items: thrillerSeries, href: "/series?genre=Thriller" },
+    { title: "Romance", items: romanceMovies, href: "/movies?genre=Romance" },
+    { title: "Sci-Fi", items: sciFiSeries, href: "/series?genre=Sci-Fi" },
   ].filter((rail) => rail.items.length > 0);
 
   return (
     <>
       <Hero items={heroItems} />
 
-      <div className="space-y-20 py-20 md:space-y-24">
-        <Rail title="Top 10" accent="this week" href="/movies">
-          {topTen.map((item, i) => (
-            <RailItem key={`${item.type}-${item.id}`}>
-              <MediaCard item={item} rank={i + 1} />
-            </RailItem>
-          ))}
-        </Rail>
+      <div className="space-y-12 py-12 md:space-y-16 md:py-16">
+        {topTen.length > 0 && (
+          <Rail title="Popular this week" href="/movies">
+            {topTen.map((item, index) => (
+              <RailItem key={`${item.type}-${item.id}`}>
+                <MediaCard item={item} rank={index + 1} />
+              </RailItem>
+            ))}
+          </Rail>
+        )}
 
         <ContinueWatching />
 
-        <Rail title="Movies" accent="big screen picks" href="/movies">
-          {topMovies.slice(0, 14).map((item) => (
-            <RailItem key={item.id}>
-              <MediaCard item={item} />
-            </RailItem>
-          ))}
-        </Rail>
-
-        <Rail title="Series" accent="must-watch television" href="/series">
-          {topSeries.slice(0, 14).map((item) => (
-            <RailItem key={item.id}>
-              <MediaCard item={item} />
-            </RailItem>
-          ))}
-        </Rail>
-
-        <AnimeRail />
-
-        {animatedMovies.length > 0 && (
-          <Rail title="Cartoons" accent="animation for all ages" href="/cartoons">
-            {animatedMovies.slice(0, 14).map((item) => (
+        {topMovies.length > 0 && (
+          <Rail title="Movies" href="/movies">
+            {topMovies.slice(0, 12).map((item) => (
               <RailItem key={item.id}>
                 <MediaCard item={item} />
               </RailItem>
@@ -142,32 +116,37 @@ export default async function HomePage() {
           </Rail>
         )}
 
-        <section className="space-y-20 md:space-y-24">
-          <div className="mx-auto max-w-[1600px] px-5 md:px-10">
-            <p className="flex items-center gap-3 text-[11px] font-bold tracking-[0.34em] text-acid uppercase">
-              <span className="h-px w-10 bg-acid" />
-              Browse
-            </p>
-            <h2 className="mt-3 font-display text-4xl tracking-[0.06em] uppercase md:text-5xl">
-              All genres
-            </h2>
-          </div>
+        {topSeries.length > 0 && (
+          <Rail title="Series" href="/series">
+            {topSeries.slice(0, 12).map((item) => (
+              <RailItem key={item.id}>
+                <MediaCard item={item} />
+              </RailItem>
+            ))}
+          </Rail>
+        )}
 
-          {genreRails.map((rail) => (
-            <Rail
-              key={rail.title}
-              title={rail.title}
-              accent={rail.accent}
-              href={rail.href}
-            >
-              {rail.items.slice(0, 14).map((item) => (
-                <RailItem key={item.id}>
-                  <MediaCard item={item} />
-                </RailItem>
-              ))}
-            </Rail>
-          ))}
-        </section>
+        <AnimeRail />
+
+        {animatedMovies.length > 0 && (
+          <Rail title="Animation" href="/cartoons">
+            {animatedMovies.slice(0, 12).map((item) => (
+              <RailItem key={item.id}>
+                <MediaCard item={item} />
+              </RailItem>
+            ))}
+          </Rail>
+        )}
+
+        {genreRails.map((rail) => (
+          <Rail key={rail.title} title={rail.title} href={rail.href}>
+            {rail.items.slice(0, 12).map((item) => (
+              <RailItem key={item.id}>
+                <MediaCard item={item} />
+              </RailItem>
+            ))}
+          </Rail>
+        ))}
       </div>
     </>
   );
