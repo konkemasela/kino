@@ -1,111 +1,21 @@
 import type { Metadata } from "next";
-import {
-  Ban,
-  Coffee,
-  CupSoda,
-  ExternalLink,
-  HeartHandshake,
-  Popcorn,
-  Rocket,
-} from "lucide-react";
+import { Coffee, CupSoda, ExternalLink, HeartHandshake, Popcorn, Rocket } from "lucide-react";
 
-export const metadata: Metadata = { title: "Donate — keep KINO free" };
-
-const DONATE_URL =
-  process.env.NEXT_PUBLIC_DONATE_URL ?? "https://buymeacoffee.com/webgenza";
-
-const TIERS = [
-  {
-    icon: Coffee,
-    name: "A coffee",
-    amount: "$3",
-    body: "Covers a day of metadata requests for the whole site.",
-  },
-  {
-    icon: Popcorn,
-    name: "A movie night",
-    amount: "$8",
-    body: "Keeps the servers humming for a week of prime-time traffic.",
-  },
-  {
-    icon: Rocket,
-    name: "Server hero",
-    amount: "$20",
-    body: "Funds a full month of hosting single-handedly. Legend status.",
-  },
+export const metadata: Metadata = { title: "Support KINO" };
+const DONATE_URL = process.env.NEXT_PUBLIC_DONATE_URL ?? "https://buymeacoffee.com/webgenza";
+const OPTIONS = [
+  { icon: Coffee, label: "Coffee", amount: "$3", detail: "A small way to support ongoing development." },
+  { icon: Popcorn, label: "Movie night", amount: "$8", detail: "Help cover hosting and maintenance costs." },
+  { icon: Rocket, label: "Supporter", amount: "$20", detail: "Make a larger contribution to the project." },
 ];
 
 export default function DonatePage() {
   return (
-    <div className="mx-auto max-w-[1100px] px-5 pb-28 pt-32 md:px-10 md:pb-16 md:pt-40">
-      <p className="flex items-center gap-3 text-[11px] font-bold tracking-[0.34em] text-acid uppercase">
-        <span className="h-px w-10 bg-acid" />
-        Support
-      </p>
-      <h1 className="mt-4 font-display text-6xl tracking-[0.03em] uppercase md:text-8xl">
-        Keep KINO{" "}
-        <span className="font-editorial text-5xl italic normal-case text-outline md:text-7xl">
-          free
-        </span>
-      </h1>
-      <p className="mt-4 max-w-xl text-sm leading-relaxed text-fog">
-        No accounts, no subscriptions, no locked features — everything on this
-        site is free forever. Hosting, bandwidth and metadata still cost real
-        money, so if KINO saved you a good evening, you can tip the developer a
-        coffee below.
-      </p>
-
-      <div className="mt-10 flex items-start gap-3 rounded-2xl border border-acid/30 bg-acid/5 p-5">
-        <Ban size={18} className="mt-0.5 shrink-0 text-acid" />
-        <p className="text-[13px] leading-relaxed text-bone/85">
-          <span className="font-semibold text-acid">Free means free:</span>{" "}
-          nothing on this site is, or ever will be, behind a payment. Donations
-          change nothing about what you can watch — they just put fuel in the
-          tank.
-        </p>
-      </div>
-
-      <div className="mt-12 grid gap-4 md:grid-cols-3">
-        {TIERS.map((tier) => (
-          <div
-            key={tier.name}
-            className="group rounded-2xl border border-line bg-panel/50 p-6 transition-colors hover:border-acid/50 md:p-8"
-          >
-            <span className="flex size-12 items-center justify-center rounded-xl bg-acid/10 text-acid transition-colors group-hover:bg-acid group-hover:text-void">
-              <tier.icon size={22} />
-            </span>
-            <h2 className="mt-5 font-display text-2xl tracking-[0.06em] text-bone uppercase">
-              {tier.name}
-            </h2>
-            <p className="font-display text-4xl tracking-[0.02em] text-acid">
-              {tier.amount}
-            </p>
-            <p className="mt-3 text-[12.5px] leading-relaxed text-fog">
-              {tier.body}
-            </p>
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-10 flex flex-col items-center gap-4 rounded-2xl border border-line bg-panel/40 p-8 text-center">
-        <HeartHandshake size={30} className="text-acid" />
-        <p className="max-w-md font-editorial text-xl italic leading-snug text-bone/90 md:text-2xl">
-          Every rand, dollar and rupee goes straight into keeping the lights on.
-        </p>
-        <a
-          href={DONATE_URL}
-          target="_blank"
-          rel="noreferrer"
-          className="mt-2 flex items-center gap-2.5 rounded-full bg-acid px-8 py-4 text-[12px] font-bold tracking-[0.2em] text-void uppercase shadow-[0_0_40px_rgba(215,246,55,0.3)] transition-transform hover:scale-105 active:scale-95"
-        >
-          <CupSoda size={16} />
-          Buy us a coffee
-          <ExternalLink size={13} />
-        </a>
-        <p className="text-[11px] text-fog">
-          Secure checkout handled externally — KINO never sees your card.
-        </p>
-      </div>
+    <div className="mx-auto max-w-[1000px] px-4 pb-16 pt-8 sm:px-6 lg:px-10">
+      <header className="max-w-3xl"><p className="text-sm font-medium text-fog">Support</p><h1 className="mt-2 text-3xl font-semibold text-bone sm:text-4xl md:text-5xl">Support KINO</h1><p className="mt-3 text-sm leading-6 text-fog">Contributions help with hosting and maintenance. KINO remains free to use, and donations do not unlock features.</p></header>
+      <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{OPTIONS.map((item) => <section key={item.label} className="rounded-xl border border-line bg-panel p-5"><span className="flex size-10 items-center justify-center rounded-lg bg-panel2 text-acid"><item.icon size={19} /></span><h2 className="mt-4 text-base font-semibold text-bone">{item.label}</h2><p className="mt-1 text-2xl font-semibold text-acid">{item.amount}</p><p className="mt-2 text-sm leading-6 text-fog">{item.detail}</p></section>)}</div>
+      <section className="mt-5 flex flex-col items-start gap-4 rounded-xl border border-line bg-panel p-5 sm:flex-row sm:items-center sm:justify-between"><div className="flex items-start gap-3"><HeartHandshake size={20} className="mt-0.5 shrink-0 text-acid" /><p className="max-w-xl text-sm leading-6 text-fog">Donations are optional. All titles and features remain available without payment.</p></div><a href={DONATE_URL} target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center gap-2 rounded-md bg-acid px-4 text-sm font-semibold text-void"><CupSoda size={16} />Make a contribution<ExternalLink size={14} /></a></section>
+      <p className="mt-3 text-xs text-fog">Payment is handled by the external provider. KINO does not receive your payment details.</p>
     </div>
   );
 }

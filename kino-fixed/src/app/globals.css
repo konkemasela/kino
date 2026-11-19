@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 @theme {
-  --color-void: #080808;
-  --color-panel: #111111;
-  --color-panel2: #1a1a1a;
-  --color-line: #2a2a2a;
-  --color-bone: #f5f5f2;
-  --color-fog: #a5a5a0;
+  --color-void: #080908;
+  --color-panel: #111310;
+  --color-panel2: #191c18;
+  --color-line: #2b3029;
+  --color-bone: #f3f5ef;
+  --color-fog: #a7ada2;
   --color-acid: #b8ff66;
   --color-ember: #ff8e5e;
 
@@ -18,14 +18,8 @@
   --animate-spin-slow: spin 14s linear infinite;
   --animate-pulse-soft: pulse-soft 2.4s ease-in-out infinite;
 
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-  @keyframes pulse-soft {
-    0%, 100% { opacity: 0.35; }
-    50% { opacity: 1; }
-  }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes pulse-soft { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
 }
 
 @utility no-scrollbar {
@@ -49,96 +43,87 @@
 }
 
 html { scroll-behavior: smooth; }
-
 html.light {
   color-scheme: light;
-  --color-void: #f5f4ef;
-  --color-panel: #ffffff;
-  --color-panel2: #ecebe4;
-  --color-line: #d9d6cd;
-  --color-bone: #181914;
-  --color-fog: #66675f;
-  --color-acid: #3f6a0a;
+  --color-void: #f5f5f1;
+  --color-panel: #fff;
+  --color-panel2: #eeefe9;
+  --color-line: #d9ddd4;
+  --color-bone: #1b1e19;
+  --color-fog: #62685f;
+  --color-acid: #477820;
   --color-ember: #b8460f;
 }
-
 .theme-dark {
   color-scheme: dark;
-  --color-void: #080808;
-  --color-panel: #111111;
-  --color-panel2: #1a1a1a;
-  --color-line: #2a2a2a;
-  --color-bone: #f5f5f2;
-  --color-fog: #a5a5a0;
+  --color-void: #080908;
+  --color-panel: #111310;
+  --color-panel2: #191c18;
+  --color-line: #2b3029;
+  --color-bone: #f3f5ef;
+  --color-fog: #a7ada2;
   --color-acid: #b8ff66;
   --color-ember: #ff8e5e;
 }
 
 html.reduce-motion { scroll-behavior: auto; }
-html.reduce-motion *,
-html.reduce-motion *::before,
-html.reduce-motion *::after {
-  animation-duration: 0.01ms !important;
+html.reduce-motion *, html.reduce-motion *::before, html.reduce-motion *::after {
+  animation-duration: .01ms !important;
   animation-iteration-count: 1 !important;
-  transition-duration: 0.01ms !important;
+  transition-duration: .01ms !important;
   scroll-behavior: auto !important;
 }
 
-html.compact .compact-grid { gap: 0.75rem; }
+html.compact .compact-grid { gap: .75rem; }
 html.compact .compact-rail { width: 118px; }
-@media (min-width: 640px) {
-  html.compact .compact-rail { width: 136px; }
-}
-@media (min-width: 768px) {
-  html.compact .compact-rail { width: 154px; }
-}
+@media (min-width: 640px) { html.compact .compact-rail { width: 136px; } }
+@media (min-width: 768px) { html.compact .compact-rail { width: 154px; } }
 
+*, *::before, *::after { box-sizing: border-box; }
 body {
+  margin: 0;
+  overflow-x: clip;
   background: var(--color-void);
   color: var(--color-bone);
-  overflow-x: clip;
+  font-family: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
-::selection {
-  background: color-mix(in srgb, var(--color-acid) 75%, white);
-  color: #080808;
-}
-
-/* Shared visual rules keep pages and controls consistent across the app. */
 h1, h2, h3, h4 {
   font-family: var(--font-manrope), ui-sans-serif, system-ui, sans-serif !important;
-  letter-spacing: -0.035em !important;
+  font-style: normal !important;
+  font-weight: 650;
+  letter-spacing: -.035em !important;
   text-transform: none !important;
 }
+.font-editorial { font-family: inherit !important; font-style: normal !important; }
+.font-display { font-family: inherit !important; letter-spacing: -.035em !important; }
 
-button, input, select, textarea {
-  font: inherit;
-}
-
-button, select {
-  border-radius: 0.5rem;
-}
-
+button, input, select, textarea { font: inherit; }
 button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
   outline: 2px solid var(--color-acid);
   outline-offset: 3px;
 }
+a { text-underline-offset: 3px; }
 
-main > div[class~="pt-32"], main > div[class~="pt-40"] {
-  padding-top: clamp(5.5rem, 8vw, 7rem);
+/* Standardize panels and cards while preserving circular controls and media art. */
+main .rounded-xl, main .rounded-2xl, main .rounded-3xl {
+  border-radius: .75rem;
 }
+main .compact-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 145px), 1fr));
+  gap: clamp(.75rem, 2vw, 1.25rem);
+}
+main img { max-width: 100%; }
 
+::selection { background: color-mix(in srgb, var(--color-acid) 72%, white); color: #080908; }
 body::-webkit-scrollbar { width: 10px; }
 body::-webkit-scrollbar-track { background: var(--color-void); }
-body::-webkit-scrollbar-thumb {
-  background: var(--color-line);
-  border: 2px solid var(--color-void);
-  border-radius: 8px;
-}
+body::-webkit-scrollbar-thumb { background: var(--color-line); border: 2px solid var(--color-void); border-radius: 8px; }
 body::-webkit-scrollbar-thumb:hover { background: var(--color-fog); }
 
 @media (max-width: 639px) {
-  main > div[class~="pt-32"], main > div[class~="pt-40"] {
-    padding-top: 5.5rem;
-  }
+  main { min-width: 0; }
+  main > div[class~="pt-32"], main > div[class~="pt-40"] { padding-top: 5.5rem; }
+  main section { min-width: 0; }
 }

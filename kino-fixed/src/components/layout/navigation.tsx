@@ -29,12 +29,10 @@ export default function Navigation() {
   const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => setMenuOpen(false), [pathname]);
-
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
-
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
@@ -47,43 +45,31 @@ export default function Navigation() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
-  const openSearch = () => {
-    setMenuOpen(false);
-    setSearchOpen(true);
-  };
+  const openSearch = () => { setMenuOpen(false); setSearchOpen(true); };
 
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-[70] border-b border-line bg-void/95 backdrop-blur">
-        <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between gap-6 px-5 md:px-10">
-          <Link href="/" aria-label="KINO home" className="shrink-0">
-            <Image src="/kino-logo.png" alt="KINO" width={96} height={30} priority className="h-auto w-20 object-contain" />
+        <div className="mx-auto flex h-[68px] max-w-[1440px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-10">
+          <Link href="/" aria-label="KINO home" className="flex h-11 w-[112px] shrink-0 items-center sm:w-[128px]">
+            <Image src="/kino-logo.png" alt="KINO" width={256} height={72} priority sizes="128px" className="block h-auto max-h-9 w-full object-contain object-left" />
           </Link>
 
-          <nav aria-label="Main navigation" className="hidden items-center gap-6 md:flex">
+          <nav aria-label="Main navigation" className="hidden items-center gap-5 lg:flex xl:gap-7">
             {ITEMS.slice(0, 5).map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn("text-sm transition-colors hover:text-bone", isActive(pathname, item.href) ? "text-bone" : "text-fog")}
-              >
+              <Link key={item.href} href={item.href} aria-current={isActive(pathname, item.href) ? "page" : undefined}
+                className={cn("whitespace-nowrap text-sm transition-colors hover:text-bone", isActive(pathname, item.href) ? "text-bone" : "text-fog")}>
                 {item.label}
               </Link>
             ))}
           </nav>
 
-          <div className="flex items-center gap-2">
-            <Link href="/library" aria-label="Saved titles" className="hidden size-9 items-center justify-center rounded-md text-fog transition-colors hover:bg-panel2 hover:text-bone md:flex">
-              <Bookmark size={18} />
-            </Link>
-            <Link href="/settings" aria-label="Settings" className="hidden size-9 items-center justify-center rounded-md text-fog transition-colors hover:bg-panel2 hover:text-bone md:flex">
-              <Settings2 size={18} />
-            </Link>
-            <button type="button" onClick={openSearch} aria-label="Search" className="flex size-9 items-center justify-center rounded-md text-fog transition-colors hover:bg-panel2 hover:text-bone">
-              <Search size={18} />
-            </button>
-            <div className="hidden md:block"><ThemeToggle withLabel={false} /></div>
-            <button type="button" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} className="flex size-9 items-center justify-center rounded-md text-fog transition-colors hover:bg-panel2 hover:text-bone md:hidden">
+          <div className="flex shrink-0 items-center gap-1 sm:gap-2">
+            <Link href="/library" aria-label="Saved titles" className="hidden size-10 items-center justify-center rounded-md text-fog transition-colors hover:bg-panel2 hover:text-bone sm:flex"><Bookmark size={18} /></Link>
+            <Link href="/settings" aria-label="Settings" className="hidden size-10 items-center justify-center rounded-md text-fog transition-colors hover:bg-panel2 hover:text-bone sm:flex"><Settings2 size={18} /></Link>
+            <button type="button" onClick={openSearch} aria-label="Search" className="flex size-10 items-center justify-center rounded-md text-fog transition-colors hover:bg-panel2 hover:text-bone"><Search size={18} /></button>
+            <div className="hidden sm:block"><ThemeToggle withLabel={false} /></div>
+            <button type="button" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} className="flex size-10 items-center justify-center rounded-md text-fog transition-colors hover:bg-panel2 hover:text-bone lg:hidden">
               {menuOpen ? <X size={19} /> : <Menu size={19} />}
             </button>
           </div>
@@ -92,19 +78,18 @@ export default function Navigation() {
 
       {menuOpen && (
         <>
-          <button type="button" aria-label="Close menu" onClick={() => setMenuOpen(false)} className="fixed inset-0 z-[75] bg-black/60 md:hidden" />
-          <nav aria-label="Mobile navigation" className="fixed inset-x-0 top-16 z-[80] max-h-[calc(100dvh-4rem)] overflow-y-auto border-b border-line bg-void px-5 py-3 md:hidden">
+          <button type="button" aria-label="Close menu" onClick={() => setMenuOpen(false)} className="fixed inset-0 z-[75] bg-black/60 lg:hidden" />
+          <nav aria-label="Mobile navigation" className="fixed inset-x-0 top-[68px] z-[80] max-h-[calc(100dvh-4.25rem)] overflow-y-auto border-b border-line bg-void px-4 py-3 sm:px-6 lg:hidden">
             {ITEMS.map((item) => (
-              <Link key={item.href} href={item.href} className={cn("flex items-center gap-3 border-b border-line py-3.5 text-sm last:border-0", isActive(pathname, item.href) ? "text-bone" : "text-fog")}>
-                <item.icon size={17} />
-                {item.label}
+              <Link key={item.href} href={item.href} aria-current={isActive(pathname, item.href) ? "page" : undefined}
+                className={cn("flex items-center gap-3 border-b border-line py-3.5 text-sm last:border-0", isActive(pathname, item.href) ? "text-bone" : "text-fog")}>
+                <item.icon size={17} />{item.label}
               </Link>
             ))}
             <div className="py-3"><ThemeToggle /></div>
           </nav>
         </>
       )}
-
       {searchOpen && <SearchOverlay onClose={() => setSearchOpen(false)} />}
     </>
   );

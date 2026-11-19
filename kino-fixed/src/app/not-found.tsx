@@ -3,21 +3,11 @@ import { Film } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-6 px-6 text-center">
-      <Film size={36} className="text-acid" />
-      <p className="font-display text-[clamp(5rem,18vw,12rem)] leading-none text-outline">
-        404
-      </p>
-      <p className="max-w-md font-editorial text-xl italic text-fog">
-        This reel is missing from the archive — the title may have moved or
-        never existed.
-      </p>
-      <Link
-        href="/"
-        className="mt-2 rounded-full bg-acid px-7 py-3 text-[11px] font-bold tracking-[0.2em] text-void uppercase transition-transform hover:scale-105"
-      >
-        Back to KINO.
-      </Link>
-    </div>
+    <main className="flex min-h-[70vh] flex-col items-center justify-center gap-4 px-4 text-center">
+      <Film size={28} className="text-fog" aria-hidden="true" />
+      <h1 className="text-5xl font-semibold text-bone sm:text-6xl">Page not found</h1>
+      <p className="max-w-md text-sm leading-6 text-fog">This page may have moved, or the address may be incorrect.</p>
+      <Link href="/" className="mt-2 inline-flex min-h-11 items-center rounded-md bg-acid px-5 text-sm font-semibold text-void">Go to KINO home</Link>
+    </main>
   );
 }
